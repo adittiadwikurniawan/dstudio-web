@@ -7,7 +7,7 @@ import { CtaSection } from '../components/home/CtaSection';
 import { AlertBanner } from '../components/common/Alert';
 import { homeApi } from '../services/homeApi';
 
-export default function Page() {
+export function HomePage() {
   const { data, isLoading, error } = useQuery({ queryKey: ['home'], queryFn: homeApi.getHome });
 
   return (
