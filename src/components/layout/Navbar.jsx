@@ -7,7 +7,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const isAdminLoggedIn = !!localStorage.getItem('admin_token');
+  const isAdminLoggedIn = !!localStorage.getItem('admin_token') && !!localStorage.getItem('admin_id');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -86,9 +86,14 @@ const Navbar = () => {
               </Button>
             </Link>
           ) : (
-            <Link to="/admin/login" className="text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors mr-2">
-              Admin Login
-            </Link>
+            <>
+              <Link to="/admin/register" className="text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors">
+                Admin Register
+              </Link>
+              <Link to="/admin/login" className="text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors">
+                Admin Login
+              </Link>
+            </>
           )}
           <Link to="/pesanan">
             <Button size="sm" className="shadow-primary-500/10">
@@ -145,11 +150,18 @@ const Navbar = () => {
                 </Button>
               </Link>
             ) : (
-              <Link to="/admin/login" className="w-full">
-                <Button variant="ghost" className="w-full py-3.5 text-slate-600">
-                  Login Admin
-                </Button>
-              </Link>
+              <>
+                <Link to="/admin/register" className="w-full">
+                  <Button variant="ghost" className="w-full py-3.5 text-slate-600">
+                    Register Admin
+                  </Button>
+                </Link>
+                <Link to="/admin/login" className="w-full">
+                  <Button variant="ghost" className="w-full py-3.5 text-slate-600">
+                    Login Admin
+                  </Button>
+                </Link>
+              </>
             )}
           </div>
         </div>

@@ -22,8 +22,22 @@ const CekStatusPage = () => {
 
     // Try API call
     try {
-      const response = await axiosInstance.get(`/orders/status/${ticketCode}`);
-      setOrder(response.data);
+      const response = await axiosInstance.post('/order/status', { ticket_id: ticketCode });
+      // Map backend fields to frontend expected format
+      const mappedOrder = {
+        ticket_code: response.data.kode_tiket,
+        customer_name: response.data.nama_pelanggan,
+        whatsapp_number: response.data.no_wa,
+        email: response.data.email || '-',
+        service_name: response.data.layanan?.nama_layanan || 'Pas Foto',
+        raw_photo_link: response.data.link_foto_mentah,
+        finished_photo_link: response.data.link_foto_hasil,
+        notes: response.data.catatan,
+        total_bayar: response.data.total_bayar,
+        status: (response.data.keterangan_status?.toLowerCase() === 'revisi' ? 'REVISI' : response.data.status_pesanan?.toUpperCase()) || 'PENDING',
+        created_at: response.data.created_at,
+      };
+      setOrder(mappedOrder);
       setToastMessage({
         type: 'success',
         text: 'Data pesanan berhasil ditemukan dari server.',

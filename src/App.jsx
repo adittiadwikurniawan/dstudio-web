@@ -9,8 +9,12 @@ import CekStatusPage from './pages/CekStatusPage';
 import HubungiPage from './pages/HubungiPage';
 import NotFoundPage from './pages/NotFoundPage';
 import LoginPage from './pages/admin/LoginPage';
+import RegisterPage from './pages/admin/RegisterPage';
 import DashboardPage from './pages/admin/DashboardPage';
+import PesananSelesaiPage from './pages/admin/PesananSelesaiPage';
 import CrudLayananPage from './pages/admin/CrudLayananPage';
+import CrudAdminPage from './pages/admin/CrudAdminPage';
+import CmsPage from './pages/admin/CmsPage';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 
 // Scroll to top on route navigation
@@ -52,21 +56,49 @@ function App() {
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<LoginPage />} />
-          
-          <Route 
-            path="/admin/dashboard" 
+          <Route path="/admin/register" element={<RegisterPage />} />
+
+          <Route
+            path="/admin/dashboard"
             element={
               <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
                 <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/completed"
+            element={
+              <ProtectedRoute allowedRoles={['ADMIN', 'SUPER_ADMIN']}>
+                <PesananSelesaiPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/admin/services"
+            element={
+              <ProtectedRoute allowedRoles={['SUPER_ADMIN']}>
+                <CrudLayananPage />
+              </ProtectedRoute>
+            }
+          />
+          
+          <Route 
+            path="/admin/cms" 
+            element={
+              <ProtectedRoute allowedRoles={['SUPER_ADMIN']}>
+                <CmsPage />
               </ProtectedRoute>
             } 
           />
           
           <Route 
-            path="/admin/services" 
+            path="/admin/admins" 
             element={
               <ProtectedRoute allowedRoles={['SUPER_ADMIN']}>
-                <CrudLayananPage />
+                <CrudAdminPage />
               </ProtectedRoute>
             } 
           />

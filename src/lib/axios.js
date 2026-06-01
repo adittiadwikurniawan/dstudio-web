@@ -8,21 +8,8 @@ const axiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // Enable cookies for session-based auth
 });
-
-// Request Interceptor: Attach bearer token from localStorage if present
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('admin_token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
 
 // Response Interceptor: Redirect to login on 401 unauthorized status
 axiosInstance.interceptors.response.use(
@@ -32,6 +19,7 @@ axiosInstance.interceptors.response.use(
       localStorage.removeItem('admin_token');
       localStorage.removeItem('admin_role');
       localStorage.removeItem('admin_name');
+      localStorage.removeItem('admin_id');
       
       // Force redirect to login page
       window.location.href = '/admin/login';
